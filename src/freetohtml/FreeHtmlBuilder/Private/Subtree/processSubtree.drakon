@@ -1,0 +1,77 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "6",
+            "content": "Myself"
+        },
+        "3": {
+            "type": "action",
+            "one": "12",
+            "content": "node.classId = buildClass(node)"
+        },
+        "6": {
+            "type": "question",
+            "one": "9",
+            "two": "8",
+            "flag1": 1,
+            "content": "node.parent"
+        },
+        "8": {
+            "type": "action",
+            "one": "17",
+            "two": "",
+            "content": "node.local = copyPosition(node)"
+        },
+        "9": {
+            "type": "action",
+            "one": "17",
+            "content": "node.local = calculateLocal(\n    node.parent.abs,\n    node.abs\n)"
+        },
+        "11": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "12": {
+            "type": "branch",
+            "one": "14",
+            "branchId": 2,
+            "content": "My children"
+        },
+        "13": {
+            "type": "loopend",
+            "one": "11",
+            "content": ""
+        },
+        "14": {
+            "type": "loopbegin",
+            "one": "15",
+            "content": "child; node.children"
+        },
+        "15": {
+            "type": "action",
+            "one": "13",
+            "content": "processSubtree(child)"
+        },
+        "17": {
+            "type": "action",
+            "one": "3",
+            "content": "node.attributes = JSON.parse(\n    node.link || \"{}\"\n)"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "node"
+}

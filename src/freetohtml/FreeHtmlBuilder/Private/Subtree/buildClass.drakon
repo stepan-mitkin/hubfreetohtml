@@ -1,0 +1,235 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "3",
+            "content": "Position"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "classId = \"class-\" + item.id"
+        },
+        "4": {
+            "type": "action",
+            "one": "10",
+            "content": "props = []"
+        },
+        "10": {
+            "type": "action",
+            "one": "62",
+            "content": "addProp(\n    props,\n    \"width\",\n    item.local.width + \"px\"\n)"
+        },
+        "33": {
+            "type": "question",
+            "one": "42",
+            "two": "43",
+            "flag1": 0,
+            "content": "item.attributes.role === \"centeredContent\""
+        },
+        "34": {
+            "type": "action",
+            "one": "41",
+            "content": "addProp(\n    props,\n    \"left\",\n    item.local.left + \"px\"\n)"
+        },
+        "35": {
+            "type": "action",
+            "one": "34",
+            "content": "addProp(\n    props,\n    \"top\",\n    item.local.top + \"px\"\n)"
+        },
+        "36": {
+            "type": "action",
+            "one": "37",
+            "content": "addProp(props, \"max-width\", \"100%\")"
+        },
+        "37": {
+            "type": "action",
+            "one": "63",
+            "content": "addProp(props, \"margin\", \"auto\")"
+        },
+        "39": {
+            "type": "branch",
+            "one": "44",
+            "branchId": 5,
+            "content": "Create class"
+        },
+        "40": {
+            "type": "branch",
+            "one": "59",
+            "branchId": 4,
+            "content": "Font"
+        },
+        "41": {
+            "type": "branch",
+            "branchId": 2,
+            "one": "48",
+            "content": "Style"
+        },
+        "42": {
+            "type": "action",
+            "one": "35",
+            "content": "addProp(props, \"display\", \"inline-block\")\naddProp(props, \"position\", \"absolute\")"
+        },
+        "43": {
+            "type": "action",
+            "one": "36",
+            "content": "addProp(props, \"display\", \"block\")\naddProp(props, \"position\", \"relative\")"
+        },
+        "44": {
+            "type": "action",
+            "one": "45",
+            "two": "",
+            "content": "classBody = {\n    name: \".\" + classId,\n    props: props\n}"
+        },
+        "45": {
+            "type": "action",
+            "one": "46",
+            "two": "",
+            "content": "styles.push(classBody)"
+        },
+        "46": {
+            "type": "action",
+            "one": "1",
+            "two": "",
+            "content": "return classId"
+        },
+        "48": {
+            "type": "question",
+            "one": "49",
+            "two": "50",
+            "flag1": 1,
+            "content": "item.style"
+        },
+        "49": {
+            "type": "action",
+            "one": "69",
+            "two": "",
+            "content": "style = JSON.parse(item.style)"
+        },
+        "50": {
+            "type": "action",
+            "one": "69",
+            "two": "",
+            "content": "style = {}"
+        },
+        "51": {
+            "type": "question",
+            "one": "52",
+            "two": "53",
+            "flag1": 1,
+            "content": "style.iconBack"
+        },
+        "52": {
+            "type": "action",
+            "one": "66",
+            "two": "",
+            "content": "addProp(\n    props,\n    \"background\",\n    style.iconBack\n)"
+        },
+        "53": {
+            "type": "action",
+            "one": "66",
+            "two": "",
+            "content": "addProp(props, \"background\", \"white\")"
+        },
+        "54": {
+            "type": "question",
+            "one": "56",
+            "two": "55",
+            "flag1": 1,
+            "content": "item.type === \"rounded\""
+        },
+        "55": {
+            "type": "question",
+            "one": "56",
+            "two": "60",
+            "flag1": 1,
+            "content": "item.type === \"rectangle\""
+        },
+        "56": {
+            "type": "question",
+            "one": "57",
+            "two": "58",
+            "flag1": 1,
+            "content": "style.color"
+        },
+        "57": {
+            "type": "action",
+            "one": "61",
+            "two": "",
+            "content": "addProp(props, \"color\", style.color)"
+        },
+        "58": {
+            "type": "action",
+            "one": "61",
+            "two": "",
+            "content": "addProp(props, \"color\", \"black\")"
+        },
+        "59": {
+            "type": "action",
+            "one": "39",
+            "two": "",
+            "content": "addFont(props, style)"
+        },
+        "60": {
+            "type": "question",
+            "one": "56",
+            "two": "66",
+            "flag1": 1,
+            "content": "item.type === \"text\""
+        },
+        "61": {
+            "type": "question",
+            "one": "51",
+            "two": "66",
+            "flag1": 0,
+            "content": "item.type === \"text\""
+        },
+        "62": {
+            "type": "action",
+            "one": "33",
+            "content": "addProp(\n    props,\n    \"height\",\n    item.local.height + \"px\"\n)"
+        },
+        "63": {
+            "type": "action",
+            "one": "41",
+            "content": "addProp(props, \"min-height\", \"100vh\")"
+        },
+        "66": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "67",
+            "content": "Border radius"
+        },
+        "67": {
+            "type": "question",
+            "one": "68",
+            "two": "40",
+            "flag1": 1,
+            "content": "item.type === \"rounded\""
+        },
+        "68": {
+            "type": "action",
+            "one": "40",
+            "two": "",
+            "content": "addProp(\n    props,\n    \"border-radius\",\n    item.aux + \"px\"\n)"
+        },
+        "69": {
+            "type": "action",
+            "one": "54",
+            "content": "item.style = style"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "item"
+}

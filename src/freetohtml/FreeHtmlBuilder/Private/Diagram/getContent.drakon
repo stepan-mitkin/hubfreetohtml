@@ -1,0 +1,107 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "17",
+            "content": "cls = \"cleft\""
+        },
+        "4": {
+            "type": "question",
+            "one": "18",
+            "two": "5",
+            "flag1": 1,
+            "content": "node.content"
+        },
+        "5": {
+            "type": "action",
+            "one": "1",
+            "content": "return \"\""
+        },
+        "11": {
+            "type": "case",
+            "one": "16",
+            "content": "\"right\""
+        },
+        "12": {
+            "type": "case",
+            "one": "15",
+            "two": "11",
+            "content": "\"center\""
+        },
+        "13": {
+            "type": "case",
+            "one": "3",
+            "two": "12",
+            "content": "\"left\""
+        },
+        "14": {
+            "type": "select",
+            "one": "13",
+            "content": "align"
+        },
+        "15": {
+            "type": "action",
+            "one": "17",
+            "content": "cls = \"ccenter\""
+        },
+        "16": {
+            "type": "action",
+            "one": "17",
+            "content": "cls = \"cright\""
+        },
+        "17": {
+            "type": "action",
+            "one": "1",
+            "content": "return makeStartTag(\"div\", {class : cls})\n+ node.content + makeCloseTag(\"div\")"
+        },
+        "18": {
+            "type": "question",
+            "one": "22",
+            "two": "19",
+            "flag1": 1,
+            "content": "node.style.textAlign"
+        },
+        "19": {
+            "type": "question",
+            "one": "21",
+            "two": "20",
+            "flag1": 0,
+            "content": "node.type === \"text\""
+        },
+        "20": {
+            "type": "action",
+            "one": "14",
+            "two": "",
+            "content": "align = \"left\""
+        },
+        "21": {
+            "type": "action",
+            "one": "14",
+            "two": "",
+            "content": "align = \"center\""
+        },
+        "22": {
+            "type": "action",
+            "one": "14",
+            "two": "",
+            "content": "align = node.style.textAlign"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "node"
+}

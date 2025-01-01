@@ -1,0 +1,55 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "4",
+            "content": "left = leftObj[property]\nright = rightObj[property]"
+        },
+        "4": {
+            "type": "question",
+            "one": "6",
+            "two": "5",
+            "flag1": 1,
+            "content": "left < right"
+        },
+        "5": {
+            "type": "question",
+            "one": "7",
+            "two": "8",
+            "flag1": 1,
+            "content": "left > right"
+        },
+        "6": {
+            "type": "action",
+            "one": "1",
+            "content": "return -1"
+        },
+        "7": {
+            "type": "action",
+            "one": "1",
+            "content": "return 1"
+        },
+        "8": {
+            "type": "action",
+            "one": "1",
+            "content": "return 0"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "leftObj\nrightObj\nproperty"
+}

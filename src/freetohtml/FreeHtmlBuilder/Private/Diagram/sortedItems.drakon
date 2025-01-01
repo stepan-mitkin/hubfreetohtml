@@ -1,0 +1,74 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "4": {
+            "type": "action",
+            "one": "7",
+            "content": "items = diagram.items || {}"
+        },
+        "5": {
+            "type": "loopend",
+            "one": "11",
+            "content": ""
+        },
+        "6": {
+            "type": "loopbegin",
+            "one": "12",
+            "content": "id, item; items"
+        },
+        "7": {
+            "type": "action",
+            "one": "6",
+            "content": "result = []"
+        },
+        "8": {
+            "type": "action",
+            "one": "1",
+            "content": "return result"
+        },
+        "9": {
+            "type": "action",
+            "one": "10",
+            "content": "item.id = id\nitem.children = []"
+        },
+        "10": {
+            "type": "action",
+            "one": "5",
+            "content": "result.push(item)"
+        },
+        "11": {
+            "type": "action",
+            "one": "8",
+            "content": "result.sort(compareByZIndex)"
+        },
+        "12": {
+            "type": "question",
+            "one": "13",
+            "two": "5",
+            "flag1": 1,
+            "content": "canAcceptItem(item)"
+        },
+        "13": {
+            "type": "action",
+            "one": "9",
+            "two": "",
+            "content": "item.abs = copyPosition(item)"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": false,
+        "async": false,
+        "algoprop": true,
+        "lazy": false
+    },
+    "params": ""
+}

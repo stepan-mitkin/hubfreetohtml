@@ -1,0 +1,58 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "13"
+        },
+        "4": {
+            "type": "loopend",
+            "one": "1",
+            "content": ""
+        },
+        "5": {
+            "type": "loopbegin",
+            "one": "10",
+            "content": "i = index - 1; i >= 0; i--"
+        },
+        "7": {
+            "type": "question",
+            "one": "4",
+            "two": "14",
+            "flag1": 0,
+            "content": "covers(other.abs, item.abs)"
+        },
+        "9": {
+            "type": "action",
+            "one": "1",
+            "content": "other.children.push(item)"
+        },
+        "10": {
+            "type": "action",
+            "one": "7",
+            "content": "other = sortedItems[i]"
+        },
+        "13": {
+            "type": "action",
+            "one": "5",
+            "content": "item = sortedItems[index]"
+        },
+        "14": {
+            "type": "action",
+            "one": "9",
+            "content": "item.parent = other"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "index"
+}

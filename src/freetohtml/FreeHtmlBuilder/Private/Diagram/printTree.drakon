@@ -1,0 +1,134 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "4",
+            "content": "Prepare"
+        },
+        "3": {
+            "type": "action",
+            "one": "20",
+            "content": "childDepth = depth + 1"
+        },
+        "4": {
+            "type": "question",
+            "one": "3",
+            "two": "5",
+            "flag1": 0,
+            "content": "node.attributes.role === \"body\""
+        },
+        "5": {
+            "type": "action",
+            "one": "10",
+            "content": "childDepth = depth"
+        },
+        "9": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 4,
+            "content": "Exit"
+        },
+        "10": {
+            "type": "branch",
+            "one": "13",
+            "branchId": 3,
+            "content": "Children"
+        },
+        "11": {
+            "type": "branch",
+            "branchId": 2,
+            "one": "15",
+            "content": "Myself"
+        },
+        "12": {
+            "type": "loopend",
+            "one": "28",
+            "two": "",
+            "content": ""
+        },
+        "13": {
+            "type": "loopbegin",
+            "one": "14",
+            "two": "",
+            "content": "child; node.children"
+        },
+        "14": {
+            "type": "action",
+            "one": "12",
+            "two": "",
+            "content": "printTree(child, childDepth, output)"
+        },
+        "15": {
+            "type": "action",
+            "one": "16",
+            "content": "attr = {\"class\": node.classId}"
+        },
+        "16": {
+            "type": "action",
+            "one": "17",
+            "content": "tag = \"div\""
+        },
+        "17": {
+            "type": "action",
+            "one": "22",
+            "content": "line = indent + makeStartTag(tag, attr)"
+        },
+        "20": {
+            "type": "action",
+            "one": "11",
+            "content": "indent = \" \".repeat(depth * 2)"
+        },
+        "22": {
+            "type": "action",
+            "one": "25",
+            "content": "line += getContent(node)"
+        },
+        "23": {
+            "type": "action",
+            "one": "24",
+            "content": "line += makeCloseTag(tag)"
+        },
+        "24": {
+            "type": "action",
+            "one": "9",
+            "content": "output.push(line)"
+        },
+        "25": {
+            "type": "question",
+            "one": "23",
+            "two": "27",
+            "flag1": 1,
+            "content": "node.children.length === 0"
+        },
+        "26": {
+            "type": "action",
+            "one": "9",
+            "content": "output.push(indent + makeCloseTag(tag))"
+        },
+        "27": {
+            "type": "action",
+            "one": "10",
+            "content": "output.push(line)"
+        },
+        "28": {
+            "type": "question",
+            "one": "26",
+            "two": "9",
+            "flag1": 0,
+            "content": "node.attributes.role === \"body\""
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "node\ndepth\noutput"
+}

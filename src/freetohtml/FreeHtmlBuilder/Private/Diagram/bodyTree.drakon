@@ -1,0 +1,80 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "23",
+            "content": "Build forest"
+        },
+        "11": {
+            "type": "branch",
+            "one": "13",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "12": {
+            "type": "branch",
+            "one": "16",
+            "branchId": 2,
+            "content": "Process subtrees"
+        },
+        "13": {
+            "type": "action",
+            "one": "1",
+            "content": "return result"
+        },
+        "15": {
+            "type": "loopend",
+            "one": "11",
+            "content": ""
+        },
+        "16": {
+            "type": "loopbegin",
+            "one": "20",
+            "content": "node; result"
+        },
+        "20": {
+            "type": "action",
+            "one": "15",
+            "content": "processSubtree(node)"
+        },
+        "22": {
+            "type": "loopend",
+            "one": "30",
+            "content": ""
+        },
+        "23": {
+            "type": "loopbegin",
+            "one": "25",
+            "content": "i = sortedItems.length - 1; i >= 0; i--"
+        },
+        "25": {
+            "type": "action",
+            "one": "22",
+            "content": "findParent(i)"
+        },
+        "28": {
+            "type": "action",
+            "one": "12",
+            "two": "",
+            "content": "result = sortedItems.filter(\n    item => !item.parent\n)"
+        },
+        "30": {
+            "type": "action",
+            "one": "28",
+            "content": "sortedItems.forEach(\n    item => item.children.sort(byTopLeft)\n)"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": false,
+        "async": false,
+        "algoprop": true,
+        "lazy": false
+    },
+    "params": ""
+}

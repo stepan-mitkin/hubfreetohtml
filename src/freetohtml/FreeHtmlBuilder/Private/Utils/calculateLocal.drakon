@@ -1,0 +1,26 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "return {\n    left: nodePos.left - parentPos.left,\n    top: nodePos.top - parentPos.top,\n    width: nodePos.width,\n    height: nodePos.height\n}"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": true,
+        "async": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "parentPos\nnodePos"
+}

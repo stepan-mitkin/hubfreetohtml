@@ -1,0 +1,46 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "4"
+        },
+        "3": {
+            "type": "action",
+            "one": "1",
+            "content": "return output.join(\"\\n\")"
+        },
+        "4": {
+            "type": "action",
+            "one": "7",
+            "content": "output = []"
+        },
+        "6": {
+            "type": "loopend",
+            "one": "3",
+            "content": ""
+        },
+        "7": {
+            "type": "loopbegin",
+            "one": "8",
+            "content": "node; bodyTree"
+        },
+        "8": {
+            "type": "action",
+            "one": "6",
+            "content": "printTree(node, 0, output)"
+        }
+    },
+    "keywords": {
+        "export": false,
+        "function": false,
+        "async": false,
+        "algoprop": true,
+        "lazy": false
+    },
+    "params": ""
+}
