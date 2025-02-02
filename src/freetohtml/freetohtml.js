@@ -15,12 +15,26 @@ function FreeHtmlBuilder(options) {
         return output.join('\n');
     }
     function _calc_bodyTree() {
-        var i, node, result;
+        var i, minX, minY, node, result;
         for (i = sortedItems.length - 1; i >= 0; i--) {
             findParent(i);
         }
         sortedItems.forEach(item => item.children.sort(byTopLeft));
         result = sortedItems.filter(item => !item.parent);
+        result.sort(byTopLeft);
+        minX = Number.MAX_SAFE_INTEGER;
+        minY = Number.MAX_SAFE_INTEGER;
+        for (node of result) {
+            calculatePosition(node);
+            minX = Math.min(node.local.left, minX);
+            minY = Math.min(node.local.top, minY);
+        }
+        for (node of result) {
+            node.local.left -= minX;
+            node.local.top -= minY;
+            node.abs.left -= minX;
+            node.abs.top -= minY;
+        }
         for (node of result) {
             processSubtree(node);
         }
@@ -87,79 +101,64 @@ function FreeHtmlBuilder(options) {
         await options.writeFile(options.output, content);
     }
     function buildClass(item) {
-        var _state_, classBody, classId, props, style;
-        _state_ = 'Position';
-        while (true) {
-            switch (_state_) {
-            case 'Position':
-                classId = 'class-' + item.id;
-                props = [];
-                addProp(props, 'width', item.local.width + 'px');
-                addProp(props, 'height', item.local.height + 'px');
-                if (item.attributes.role === 'centeredContent') {
-                    addProp(props, 'display', 'block');
-                    addProp(props, 'position', 'relative');
-                    addProp(props, 'max-width', '100%');
-                    addProp(props, 'margin', 'auto');
-                    addProp(props, 'min-height', '100vh');
-                    _state_ = 'Style';
-                } else {
-                    addProp(props, 'display', 'inline-block');
-                    addProp(props, 'position', 'absolute');
-                    addProp(props, 'top', item.local.top + 'px');
-                    addProp(props, 'left', item.local.left + 'px');
-                    _state_ = 'Style';
+        var classBody, classId, props, style;
+        classId = 'class-' + item.id;
+        props = [];
+        if (item.local.width === 0) {
+            item.local.width = 1;
+        }
+        if (item.local.height === 0) {
+            item.local.height = 1;
+        }
+        addProp(props, 'width', item.local.width + 'px');
+        addProp(props, 'height', item.local.height + 'px');
+        if (item.attributes.role === 'centeredContent') {
+            addProp(props, 'display', 'block');
+            addProp(props, 'position', 'relative');
+            addProp(props, 'max-width', '100%');
+            addProp(props, 'margin', 'auto');
+            addProp(props, 'min-height', '100vh');
+        } else {
+            addProp(props, 'display', 'inline-block');
+            addProp(props, 'position', 'absolute');
+            addProp(props, 'top', item.local.top + 'px');
+            addProp(props, 'left', item.local.left + 'px');
+        }
+        if (item.style) {
+            style = JSON.parse(item.style);
+        } else {
+            style = {};
+        }
+        item.style = style;
+        if (item.type === 'rounded' || item.type === 'rectangle' || item.type === 'text') {
+            if (style.color) {
+                addProp(props, 'color', style.color);
+            } else {
+                addProp(props, 'color', 'black');
+            }
+            if (style.iconBack) {
+                addProp(props, 'background', style.iconBack);
+            } else {
+                if (item.type !== 'text') {
+                    addProp(props, 'background', 'white');
                 }
-                break;
-            case 'Style':
-                if (item.style) {
-                    style = JSON.parse(item.style);
-                } else {
-                    style = {};
-                }
-                item.style = style;
-                if (item.type === 'rounded' || item.type === 'rectangle' || item.type === 'text') {
-                    if (style.color) {
-                        addProp(props, 'color', style.color);
-                    } else {
-                        addProp(props, 'color', 'black');
-                    }
-                    if (item.type !== 'text') {
-                        if (style.iconBack) {
-                            addProp(props, 'background', style.iconBack);
-                            _state_ = 'Border radius';
-                        } else {
-                            addProp(props, 'background', 'white');
-                            _state_ = 'Border radius';
-                        }
-                    }
-                }
-                _state_ = 'Border radius';
-                break;
-            case 'Border radius':
-                if (item.type === 'rounded') {
-                    addProp(props, 'border-radius', item.aux + 'px');
-                    _state_ = 'Font';
-                } else {
-                    _state_ = 'Font';
-                }
-                break;
-            case 'Font':
-                addFont(props, style);
-                _state_ = 'Create class';
-                break;
-            case 'Create class':
-                _state_ = undefined;
-                classBody = {
-                    name: '.' + classId,
-                    props: props
-                };
-                styles.push(classBody);
-                return classId;
-            default:
-                return;
             }
         }
+        if (item.type === 'rounded') {
+            addProp(props, 'border-radius', item.aux + 'px');
+        }
+        addFont(props, style);
+        if (item.attributes.image) {
+            addProp(props, 'background-image', 'url("' + item.attributes.image + '")');
+            addProp(props, 'background-size', '100% auto');
+            addProp(props, 'font', defaultFont);
+        }
+        classBody = {
+            name: '.' + classId,
+            props: props
+        };
+        styles.push(classBody);
+        return classId;
     }
     async function buildHeader() {
         var header;
@@ -184,6 +183,18 @@ function FreeHtmlBuilder(options) {
             width: nodePos.width,
             height: nodePos.height
         };
+    }
+    function calculatePosition(node) {
+        var _collection_9, child;
+        if (node.parent) {
+            node.local = calculateLocal(node.parent.abs, node.abs);
+        } else {
+            node.local = copyPosition(node);
+        }
+        _collection_9 = node.children;
+        for (child of _collection_9) {
+            calculatePosition(child);
+        }
     }
     function canAcceptItem(item) {
         var _selectValue_2;
@@ -259,32 +270,66 @@ function FreeHtmlBuilder(options) {
         return node.top + node.height;
     }
     function getContent(node) {
-        var align, cls;
-        if (node.content) {
-            if (node.style.textAlign) {
-                align = node.style.textAlign;
-            } else {
-                if (node.type === 'text') {
-                    align = 'left';
-                } else {
-                    align = 'center';
-                }
-            }
-            if (align === 'left') {
-                cls = 'cleft';
-            } else {
-                if (align === 'center') {
-                    cls = 'ccenter';
-                } else {
-                    if (align !== 'right') {
-                        throw new Error('Unexpected case value: ' + align);
+        var _state_, align, cls, valign;
+        _state_ = 'Horizontal align';
+        while (true) {
+            switch (_state_) {
+            case 'Horizontal align':
+                if (node.content) {
+                    if (node.style.textAlign) {
+                        align = node.style.textAlign;
+                    } else {
+                        if (node.type === 'text') {
+                            align = 'left';
+                        } else {
+                            align = 'center';
+                        }
                     }
-                    cls = 'cright';
+                    if (align === 'left') {
+                        cls = 'cleft';
+                    } else {
+                        if (align === 'center') {
+                            cls = 'ccenter';
+                        } else {
+                            if (align !== 'right') {
+                                throw new Error('Unexpected case value: ' + align);
+                            }
+                            cls = 'cright';
+                        }
+                    }
+                    _state_ = 'Vertical align';
+                } else {
+                    return '';
+                    _state_ = 'Exit';
                 }
+                break;
+            case 'Vertical align':
+                if (node.style.verticalAlign) {
+                    valign = node.style.verticalAlign;
+                } else {
+                    valign = 'middle';
+                }
+                if (valign === 'top') {
+                    cls += ' ctop';
+                } else {
+                    if (valign === 'middle') {
+                        cls += ' cmiddle';
+                    } else {
+                        if (valign !== 'bottom') {
+                            throw new Error('Unexpected case value: ' + valign);
+                        }
+                        cls += ' cbottom';
+                    }
+                }
+                return makeStartTag('div', { class: cls }) + node.content + makeCloseTag('div');
+                _state_ = 'Exit';
+                break;
+            case 'Exit':
+                _state_ = undefined;
+                break;
+            default:
+                return;
             }
-            return makeStartTag('div', { class: cls }) + node.content + makeCloseTag('div');
-        } else {
-            return '';
         }
     }
     function getRight(node) {
@@ -292,6 +337,26 @@ function FreeHtmlBuilder(options) {
     }
     function makeCloseTag(tag) {
         return '</' + tag + '>';
+    }
+    function makeProp(line) {
+        var index, name, namePart, value, valuePart;
+        index = line.indexOf(':');
+        if (index === -1) {
+            return undefined;
+        } else {
+            namePart = line.substring(0, index);
+            valuePart = line.substring(index + 1);
+            name = namePart.trim();
+            value = valuePart.trim();
+            if (name && value) {
+                return {
+                    name: name,
+                    value: value
+                };
+            } else {
+                return undefined;
+            }
+        }
     }
     function makeStartTag(tag, attributes) {
         var key, result, value;
@@ -301,6 +366,20 @@ function FreeHtmlBuilder(options) {
             result += ' ' + key + '="' + value + '"';
         }
         return result + '>';
+    }
+    function parseAux2(aux2) {
+        var auxLines, prop, props, result;
+        result = {};
+        if (aux2) {
+            auxLines = aux2.split('\n');
+            props = auxLines.map(makeProp);
+            for (prop of props) {
+                if (prop) {
+                    result[prop.name] = prop.value;
+                }
+            }
+        }
+        return result;
     }
     function printTree(node, depth, output) {
         var _collection_4, _state_, attr, child, childDepth, indent, line, tag;
@@ -319,7 +398,15 @@ function FreeHtmlBuilder(options) {
                 break;
             case 'Myself':
                 attr = { 'class': node.classId };
-                tag = 'div';
+                if (node.attributes.class) {
+                    attr.class += ' ' + node.attributes.class;
+                }
+                if (node.attributes.link) {
+                    attr.href = node.attributes.link;
+                    tag = 'a';
+                } else {
+                    tag = 'div';
+                }
                 line = indent + makeStartTag(tag, attr);
                 line += getContent(node);
                 if (node.children.length === 0) {
@@ -336,12 +423,10 @@ function FreeHtmlBuilder(options) {
                 for (child of _collection_4) {
                     printTree(child, childDepth, output);
                 }
-                if (node.attributes.role === 'body') {
-                    _state_ = 'Exit';
-                } else {
+                if (node.attributes.role !== 'body') {
                     output.push(indent + makeCloseTag(tag));
-                    _state_ = 'Exit';
                 }
+                _state_ = 'Exit';
                 break;
             case 'Exit':
                 _state_ = undefined;
@@ -352,16 +437,11 @@ function FreeHtmlBuilder(options) {
         }
     }
     function processSubtree(node) {
-        var _collection_9, child;
-        if (node.parent) {
-            node.local = calculateLocal(node.parent.abs, node.abs);
-        } else {
-            node.local = copyPosition(node);
-        }
-        node.attributes = JSON.parse(node.link || '{}');
+        var _collection_11, child;
+        node.attributes = parseAux2(node.aux2);
         node.classId = buildClass(node);
-        _collection_9 = node.children;
-        for (child of _collection_9) {
+        _collection_11 = node.children;
+        for (child of _collection_11) {
             processSubtree(child);
         }
     }

@@ -6,12 +6,13 @@
         },
         "2": {
             "type": "branch",
-            "branchId": 0,
-            "one": "4"
+            "branchId": 1,
+            "one": "4",
+            "content": "Horizontal align"
         },
         "3": {
             "type": "action",
-            "one": "17",
+            "one": "24",
             "content": "cls = \"cleft\""
         },
         "4": {
@@ -23,7 +24,7 @@
         },
         "5": {
             "type": "action",
-            "one": "1",
+            "one": "23",
             "content": "return \"\""
         },
         "11": {
@@ -50,18 +51,13 @@
         },
         "15": {
             "type": "action",
-            "one": "17",
+            "one": "24",
             "content": "cls = \"ccenter\""
         },
         "16": {
             "type": "action",
-            "one": "17",
+            "one": "24",
             "content": "cls = \"cright\""
-        },
-        "17": {
-            "type": "action",
-            "one": "1",
-            "content": "return makeStartTag(\"div\", {class : cls})\n+ node.content + makeCloseTag(\"div\")"
         },
         "18": {
             "type": "question",
@@ -94,6 +90,84 @@
             "one": "14",
             "two": "",
             "content": "align = node.style.textAlign"
+        },
+        "23": {
+            "type": "branch",
+            "one": "1",
+            "branchId": 3,
+            "content": "Exit"
+        },
+        "24": {
+            "type": "branch",
+            "one": "33",
+            "branchId": 2,
+            "content": "Vertical align"
+        },
+        "25": {
+            "type": "action",
+            "one": "23",
+            "content": "return makeStartTag(\"div\", {class : cls})\n+ node.content + makeCloseTag(\"div\")"
+        },
+        "26": {
+            "type": "action",
+            "one": "25",
+            "two": "",
+            "content": "cls += \" ctop\""
+        },
+        "27": {
+            "type": "case",
+            "one": "32",
+            "two": "",
+            "content": "\"bottom\""
+        },
+        "28": {
+            "type": "case",
+            "one": "31",
+            "two": "27",
+            "content": "\"middle\""
+        },
+        "29": {
+            "type": "case",
+            "one": "26",
+            "two": "28",
+            "content": "\"top\""
+        },
+        "30": {
+            "type": "select",
+            "one": "29",
+            "two": "",
+            "content": "valign"
+        },
+        "31": {
+            "type": "action",
+            "one": "25",
+            "two": "",
+            "content": "cls += \" cmiddle\""
+        },
+        "32": {
+            "type": "action",
+            "one": "25",
+            "two": "",
+            "content": "cls += \" cbottom\""
+        },
+        "33": {
+            "type": "question",
+            "one": "37",
+            "two": "36",
+            "flag1": 1,
+            "content": "node.style.verticalAlign"
+        },
+        "36": {
+            "type": "action",
+            "one": "30",
+            "two": "",
+            "content": "valign = \"middle\""
+        },
+        "37": {
+            "type": "action",
+            "one": "30",
+            "two": "",
+            "content": "valign = node.style.verticalAlign"
         }
     },
     "keywords": {

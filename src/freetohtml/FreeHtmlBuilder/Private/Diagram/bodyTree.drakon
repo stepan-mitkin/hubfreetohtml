@@ -13,13 +13,13 @@
         "11": {
             "type": "branch",
             "one": "13",
-            "branchId": 3,
+            "branchId": 5,
             "content": "Exit"
         },
         "12": {
             "type": "branch",
             "one": "16",
-            "branchId": 2,
+            "branchId": 4,
             "content": "Process subtrees"
         },
         "13": {
@@ -59,7 +59,7 @@
         },
         "28": {
             "type": "action",
-            "one": "12",
+            "one": "49",
             "two": "",
             "content": "result = sortedItems.filter(\n    item => !item.parent\n)"
         },
@@ -67,6 +67,77 @@
             "type": "action",
             "one": "28",
             "content": "sortedItems.forEach(\n    item => item.children.sort(byTopLeft)\n)"
+        },
+        "38": {
+            "type": "branch",
+            "branchId": 2,
+            "one": "42",
+            "content": "Calculate positions"
+        },
+        "39": {
+            "type": "loopend",
+            "one": "44",
+            "two": "",
+            "content": ""
+        },
+        "40": {
+            "type": "loopbegin",
+            "one": "41",
+            "two": "",
+            "content": "node; result"
+        },
+        "41": {
+            "type": "action",
+            "one": "43",
+            "two": "",
+            "content": "calculatePosition(node)"
+        },
+        "42": {
+            "type": "action",
+            "one": "40",
+            "two": "",
+            "content": "minX = Number.MAX_SAFE_INTEGER\nminY = Number.MAX_SAFE_INTEGER"
+        },
+        "43": {
+            "type": "action",
+            "one": "39",
+            "two": "",
+            "content": "minX = Math.min(node.local.left, minX)\nminY = Math.min(node.local.top, minY)"
+        },
+        "44": {
+            "type": "branch",
+            "branchId": 3,
+            "one": "45",
+            "content": "Ajust positions"
+        },
+        "45": {
+            "type": "loopbegin",
+            "one": "47",
+            "two": "",
+            "content": "node; result"
+        },
+        "46": {
+            "type": "loopend",
+            "one": "12",
+            "two": "",
+            "content": ""
+        },
+        "47": {
+            "type": "action",
+            "one": "48",
+            "two": "",
+            "content": "node.local.left -= minX\nnode.local.top -= minY"
+        },
+        "48": {
+            "type": "action",
+            "one": "46",
+            "two": "",
+            "content": "node.abs.left -= minX\nnode.abs.top -= minY"
+        },
+        "49": {
+            "type": "action",
+            "one": "38",
+            "content": "result.sort(byTopLeft)"
         }
     },
     "keywords": {

@@ -48,8 +48,6 @@ ol li {
     text-align: left;
     left: 0px;
     width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .ccenter {
@@ -58,8 +56,6 @@ ol li {
     text-align: center;
     left: 0px;
     width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .cright {
@@ -68,6 +64,17 @@ ol li {
     text-align: right;
     left: 0px;
     width: 100%;
+}
+
+.cbottom {
+    bottom: 0px;
+}
+
+.ctop {
+    top: 0px;
+}
+
+.cmiddle {
     top: 50%;
     transform: translateY(-50%);    
 }

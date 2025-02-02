@@ -6,19 +6,9 @@
         },
         "2": {
             "type": "branch",
-            "branchId": 1,
-            "one": "3",
-            "content": "Position"
-        },
-        "3": {
-            "type": "action",
-            "one": "4",
-            "content": "classId = \"class-\" + item.id"
-        },
-        "4": {
-            "type": "action",
+            "branchId": 2,
             "one": "10",
-            "content": "props = []"
+            "content": "Position"
         },
         "10": {
             "type": "action",
@@ -55,18 +45,18 @@
         "39": {
             "type": "branch",
             "one": "44",
-            "branchId": 5,
+            "branchId": 7,
             "content": "Create class"
         },
         "40": {
             "type": "branch",
             "one": "59",
-            "branchId": 4,
+            "branchId": 5,
             "content": "Font"
         },
         "41": {
             "type": "branch",
-            "branchId": 2,
+            "branchId": 3,
             "one": "48",
             "content": "Style"
         },
@@ -120,7 +110,7 @@
         "51": {
             "type": "question",
             "one": "52",
-            "two": "53",
+            "two": "77",
             "flag1": 1,
             "content": "style.iconBack"
         },
@@ -159,19 +149,19 @@
         },
         "57": {
             "type": "action",
-            "one": "61",
+            "one": "51",
             "two": "",
             "content": "addProp(props, \"color\", style.color)"
         },
         "58": {
             "type": "action",
-            "one": "61",
+            "one": "51",
             "two": "",
             "content": "addProp(props, \"color\", \"black\")"
         },
         "59": {
             "type": "action",
-            "one": "39",
+            "one": "78",
             "two": "",
             "content": "addFont(props, style)"
         },
@@ -180,13 +170,6 @@
             "one": "56",
             "two": "66",
             "flag1": 1,
-            "content": "item.type === \"text\""
-        },
-        "61": {
-            "type": "question",
-            "one": "51",
-            "two": "66",
-            "flag1": 0,
             "content": "item.type === \"text\""
         },
         "62": {
@@ -201,7 +184,7 @@
         },
         "66": {
             "type": "branch",
-            "branchId": 3,
+            "branchId": 4,
             "one": "67",
             "content": "Border radius"
         },
@@ -222,6 +205,85 @@
             "type": "action",
             "one": "54",
             "content": "item.style = style"
+        },
+        "70": {
+            "type": "branch",
+            "branchId": 1,
+            "one": "71",
+            "content": "Prepare"
+        },
+        "71": {
+            "type": "action",
+            "one": "72",
+            "two": "",
+            "content": "classId = \"class-\" + item.id"
+        },
+        "72": {
+            "type": "action",
+            "one": "73",
+            "two": "",
+            "content": "props = []"
+        },
+        "73": {
+            "type": "question",
+            "one": "75",
+            "two": "74",
+            "flag1": 0,
+            "content": "item.local.width === 0"
+        },
+        "74": {
+            "type": "action",
+            "one": "75",
+            "content": "item.local.width = 1"
+        },
+        "75": {
+            "type": "question",
+            "one": "2",
+            "two": "76",
+            "flag1": 0,
+            "content": "item.local.height === 0"
+        },
+        "76": {
+            "type": "action",
+            "one": "2",
+            "two": "",
+            "content": "item.local.height = 1"
+        },
+        "77": {
+            "type": "question",
+            "one": "53",
+            "two": "66",
+            "flag1": 0,
+            "content": "item.type === \"text\""
+        },
+        "78": {
+            "type": "branch",
+            "branchId": 6,
+            "one": "79",
+            "content": "Image"
+        },
+        "79": {
+            "type": "question",
+            "one": "39",
+            "two": "80",
+            "flag1": 0,
+            "content": "item.attributes.image"
+        },
+        "80": {
+            "type": "action",
+            "one": "84",
+            "content": "addProp(\n    props,\n    \"background-image\",\n    \"url(\\\"\" + item.attributes.image + \"\\\")\"\n)"
+        },
+        "83": {
+            "type": "action",
+            "one": "39",
+            "two": "",
+            "content": "addProp(props, \"font\", defaultFont)"
+        },
+        "84": {
+            "type": "action",
+            "one": "83",
+            "content": "addProp(\n    props,\n    \"background-size\",\n    \"100% auto\"\n)"
         }
     },
     "keywords": {

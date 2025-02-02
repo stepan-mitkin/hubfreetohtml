@@ -1,0 +1,71 @@
+{
+    "type": "drakon",
+    "items": {
+        "1": {
+            "type": "end"
+        },
+        "2": {
+            "type": "branch",
+            "branchId": 0,
+            "one": "3"
+        },
+        "3": {
+            "type": "action",
+            "one": "5",
+            "content": "result = {}"
+        },
+        "4": {
+            "type": "action",
+            "one": "1",
+            "content": "return result"
+        },
+        "5": {
+            "type": "question",
+            "one": "6",
+            "two": "4",
+            "flag1": 1,
+            "content": "aux2"
+        },
+        "6": {
+            "type": "action",
+            "one": "9",
+            "content": "auxLines = aux2.split(\"\\n\")"
+        },
+        "7": {
+            "type": "loopend",
+            "one": "4",
+            "content": ""
+        },
+        "8": {
+            "type": "loopbegin",
+            "one": "10",
+            "content": "prop; props"
+        },
+        "9": {
+            "type": "action",
+            "one": "8",
+            "content": "props = auxLines.map(makeProp)"
+        },
+        "10": {
+            "type": "question",
+            "one": "11",
+            "two": "7",
+            "flag1": 1,
+            "content": "prop"
+        },
+        "11": {
+            "type": "action",
+            "one": "7",
+            "content": "result[prop.name] = prop.value"
+        }
+    },
+    "keywords": {
+        "function": true,
+        "machine": false,
+        "async": false,
+        "export": false,
+        "algoprop": false,
+        "lazy": false
+    },
+    "params": "aux2"
+}

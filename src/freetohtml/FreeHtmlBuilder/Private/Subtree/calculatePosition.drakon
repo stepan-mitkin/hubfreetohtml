@@ -7,13 +7,26 @@
         "2": {
             "type": "branch",
             "branchId": 1,
-            "one": "17",
+            "one": "6",
             "content": "Myself"
         },
-        "3": {
+        "6": {
+            "type": "question",
+            "one": "9",
+            "two": "8",
+            "flag1": 1,
+            "content": "node.parent"
+        },
+        "8": {
             "type": "action",
             "one": "12",
-            "content": "node.classId = buildClass(node)"
+            "two": "",
+            "content": "node.local = copyPosition(node)"
+        },
+        "9": {
+            "type": "action",
+            "one": "12",
+            "content": "node.local = calculateLocal(\n    node.parent.abs,\n    node.abs\n)"
         },
         "11": {
             "type": "branch",
@@ -40,12 +53,7 @@
         "15": {
             "type": "action",
             "one": "13",
-            "content": "processSubtree(child)"
-        },
-        "17": {
-            "type": "action",
-            "one": "3",
-            "content": "node.attributes = parseAux2(node.aux2)"
+            "content": "calculatePosition(child)"
         }
     },
     "keywords": {
